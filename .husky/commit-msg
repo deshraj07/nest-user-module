@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+
+# The script now only contains the command you want to run.
+# The internal Husky boilerplate is removed.
+npx --no -- commitlint --edit $1

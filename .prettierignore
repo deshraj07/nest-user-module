@@ -1,0 +1,35 @@
+# Dependencies
+node_modules/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Build outputs
+dist/
+build/
+coverage/
+.next/
+out/
+
+# Environment and configs
+.env*
+!.env.example
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Documentation
+*.md
+LICENSE
+
+# Generated files
+*.generated.ts
+*.gen.ts
+schema.graphql
+
+# Migrations
+migrations/

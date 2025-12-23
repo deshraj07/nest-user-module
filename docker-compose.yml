@@ -1,0 +1,21 @@
+services:
+  # ----------------------------------------
+  # 1. DATABASE SERVICE (PostgreSQL)
+  # ----------------------------------------
+  db:
+    image: postgres:16-alpine
+    container_name: nest_postgres_db
+    restart: always
+    environment:
+      # Docker Compose will now look for these variables in the external .env file
+      POSTGRES_USER: ${DB_USER} # Reads DB_USER from .env
+      POSTGRES_PASSWORD: ${DB_PASSWORD} # Reads DB_PASSWORD from .env
+      POSTGRES_DB: ${DB_NAME} # Reads DB_NAME from .env
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+# Docker Volumes for persistent data
+volumes:
+  postgres_data:

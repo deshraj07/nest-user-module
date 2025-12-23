@@ -1,0 +1,64 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id              Int          @id @default(autoincrement())
+  name            String
+  email           String       @unique
+  role            String
+  status          String
+  subscription    String
+  joinedDate      DateTime
+  lastActive      String
+  avatar          String
+  isVerified      Boolean      @default(false)
+  isDelete        Boolean      @default(false)
+  actionsDone     AuditLog[]   @relation("ActionBy")
+  actionsReceived AuditLog[]   @relation("ActionOn")
+  bans            Ban[]
+  invitations     Invitation[]
+  suspensions     Suspension[]
+}
+
+model Invitation {
+  id        Int      @id @default(autoincrement())
+  email     String
+  status    String   @default("Pending")
+  createdAt DateTime @default(now())
+  userId    Int?
+  user      User?    @relation(fields: [userId], references: [id])
+}
+
+model AuditLog {
+  id          Int      @id @default(autoincrement())
+  action      String
+  createdAt   DateTime @default(now())
+  moderatorId Int?
+  reason      String?
+  studentId   Int?
+  moderator   User?    @relation("ActionBy", fields: [moderatorId], references: [id])
+  student     User?    @relation("ActionOn", fields: [studentId], references: [id])
+}
+
+model Suspension {
+  id        Int      @id @default(autoincrement())
+  reason    String
+  startDate DateTime
+  duration  Int
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+model Ban {
+  id       Int      @id @default(autoincrement())
+  reason   String
+  bannedAt DateTime
+  userId   Int
+  user     User     @relation(fields: [userId], references: [id])
+}
