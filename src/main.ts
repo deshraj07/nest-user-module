@@ -29,8 +29,13 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 
-  await app.listen(process.env.PORT ?? 5005);
-  console.log(`Server is running on http://localhost:${process.env.PORT ?? 5005}`);
-  console.log(`Swagger is running on http://localhost:${process.env.PORT ?? 5005}/api`);
+const port = process.env.PORT || 5005;
+
+// Listen on all network interfaces
+await app.listen(port, '0.0.0.0');
+
+console.log(`Server is running on port ${port}`);
+// Do NOT print localhost, because it won't work outside
+console.log(`Swagger is available at /api (use your Railway URL)`); 
 }
 bootstrap();
